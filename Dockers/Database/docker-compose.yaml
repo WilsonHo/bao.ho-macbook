@@ -1,0 +1,83 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:10
+    container_name: postgres.bao.ho
+    hostname: postgres.bao.ho
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      PGDATA: /data/postgres
+    volumes:
+       - ./data/postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - bao.ho
+
+
+  mysql:
+    image: mysql:8
+    container_name: mysql.bao.ho
+    hostname: mysql.bao.ho
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    volumes:
+       - ./data/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - bao.ho
+
+
+  redis:
+    image: redis:4.0.10
+    container_name: redis.bao.ho
+    hostname: redis.bao.ho
+    restart: unless-stopped
+    environment:
+      REDIS_PASSWORD: 123456
+    volumes:
+       - ./data/redis:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - bao.ho
+
+
+  elasticsearch:
+    image: elasticsearch:5.6.10
+    container_name: elasticsearch.bao.ho
+    hostname: elasticsearch.bao.ho
+    restart: unless-stopped
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    volumes:
+      - ./data/elasticsearch:/usr/share/elasticsearch
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - bao.ho
+
+
+  solr:
+    image: solr:7.4.0
+    container_name: solr.bao.ho
+    hostname: solr.bao.ho
+    restart: unless-stopped
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    volumes:
+      - ./data/solr:/opt/solr/server/solr
+    ports:
+      - "8983:8983"
+    networks:
+      - bao.ho
+networks:
+  bao.ho:
+    external:
+      name: bao.ho.network
