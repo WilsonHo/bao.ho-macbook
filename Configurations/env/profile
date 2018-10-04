@@ -1,0 +1,36 @@
+export KEY_PATH=~/Documents/Working/QUOINE/Documents/Keys/ssh/new_nifi
+export PATH=$HOME/.jenv/bin:$PATH
+
+# alias connect-quoinex-main='ssh -i $KEY_PATH/quoine-nifi.pem ubuntu@13.230.204.107 -L 5431:ec2-13-114-82-41.ap-northeast-1.compute.amazonaws.com:5432'
+# alias connect-quoinex-market='ssh -i $KEY_PATH/quoine-nifi.pem ubuntu@nifi-node01 -L 5432:ec2-13-114-188-130.ap-northeast-1.compute.amazonaws.com:5432'
+# alias connect-qryptos-main='ssh -i $KEY_PATH/quoine-nifi.pem ubuntu@nifi-node01 -L 5433:ec2-13-115-223-135.ap-northeast-1.compute.amazonaws.com:5432'
+# alias connect-qryptos-market='ssh -i $KEY_PATH/quoine-nifi.pem ubuntu@nifi-node01 -L 5434:ec2-13-114-162-55.ap-northeast-1.compute.amazonaws.com:5432'
+
+export PATH=/Users/bao.ho/Kafka/confluent-4.1.1/bin:$PATH
+
+# #########################
+# # Path
+# #########################
+# export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+
+
+
+
+# #########################
+# # Python
+# #########################
+
+# export PATH=~/Library/Python/3.7/bin:$PATH
+
+
+
+
+# #########################
+# # Vi
+# #########################
+# alias vi='vim'
+# alias pip='pip3'
+
+export APP_HOME=/Users/hogiabao/Applications
+

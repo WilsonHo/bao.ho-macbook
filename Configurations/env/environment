@@ -1,0 +1,26 @@
+#########################
+# Languages
+#########################
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+
+#########################
+# Java
+#########################
+export JAVA_HOME=$(/usr/libexec/java_home)
+
+#########################
+# Docker
+#########################
+export DOCKER_ID_USER="hogiabao2601"
+
+
+#########################
+# Vim
+#########################
+export EDITOR=vim
+
+export CONDA_HOME=/Users/hogiabao/anaconda3
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:$CONDA_HOME/bin/
+

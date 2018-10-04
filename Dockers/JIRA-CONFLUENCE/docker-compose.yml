@@ -1,0 +1,88 @@
+version: '2'
+
+services:
+  jira:
+    image: blacklabelops/jira
+    container_name: jira
+    restart: always
+    networks:
+      - atlassiannet
+    volumes:
+      - jiradata:/var/atlassian/jira
+    ports:
+      - '8880:8080'
+    environment:
+      - 'JIRA_DATABASE_URL=mysql://jiradb_user@jira-mysql/jiradb'
+      - 'JIRA_DB_PASSWORD=mO9Wn3cwOczR6Ekg'
+      - 'CATALINA_OPTS= -Xms256m -Xmx768m -XX:+UseConcMarkSweepGC -XX:+CMSParallelRemarkEnabled -XX:+ScavengeBeforeFullGC -XX:+CMSScavengeBeforeRemark'
+      - 'JIRA_PROXY_NAME=jira.emobi-sys.com'
+      - 'JIRA_PROXY_PORT=80'
+      - 'JIRA_PROXY_SCHEME=http'
+      - 'JIRA_DELAYED_START=10'
+    links:
+      - 'jiramysql:jiramysql'
+
+  jiramysql:
+    image: mysql:5.6
+    container_name: jira-mysql
+    restart: always
+    hostname: jira-mysql
+    networks:
+      - atlassiannet
+    volumes:
+      - jiramysqldata:/var/lib/mysql
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=5c947548495a97d36ed5e966fb91d562'
+      - 'MYSQL_DATABASE=jiradb'
+      - 'MYSQL_USER=jiradb_user'
+      - 'MYSQL_PASSWORD=mO9Wn3cwOczR6Ekg'
+
+  confluence:
+    image: blacklabelops/confluence
+    container_name: confluence
+    restart: always
+    #hostname: confluence
+    networks:
+      - atlassiannet
+    volumes:
+      - confluencedata:/var/atlassian/confluence
+    ports:
+      - '8881:8090'
+    environment:
+      - 'CATALINA_OPTS= -Xms256m -Xmx768m'
+      - 'CONFLUENCE_PROXY_NAME=confluence.emobi-sys.com'
+      - 'CONFLUENCE_PROXY_PORT=80'
+      - 'CONFLUENCE_PROXY_SCHEME=http'
+      - 'CONFLUENCE_DELAYED_START=60'
+    links:
+      - 'confluencemysql:confluencemysql'
+
+  confluencemysql:
+    image: mysql:5.6
+    container_name: confluence-mysql
+    restart: always
+    hostname: confluence-mysql
+    networks:
+      - atlassiannet
+    volumes:
+      - confluencemysqldata:/var/lib/mysql
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=5c947548495a97d36ed5e966fb91d562'
+      - 'MYSQL_DATABASE=confluencedb'
+      - 'MYSQL_USER=confluence_user'
+      - 'MYSQL_PASSWORD=ty58gmbnO5RbgFnz'
+
+volumes:
+  jiradata:
+    external: false
+  confluencedata:
+    external: false
+  jiramysqldata:
+    external: false
+  confluencemysqldata:
+    external: false
+
+networks:
+  atlassiannet:
+    driver: bridge
+

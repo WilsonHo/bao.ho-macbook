@@ -1,0 +1,51 @@
+# 
+
+# export BLOCKSIZE=1k
+
+alias cdd='cd /Volumes/backup.bao.ho/bao.ho-macbook/Dockers'
+alias cdi='cd /Volumes/backup.bao.ho/IdeaProjects'
+alias ll='ls -alh'
+alias n='netstat -anv | grep LISTEN'
+
+alias free="ruby $APP_HOME/free-memory.rb"
+alias pyfree="python $APP_HOME/free-memory.py"
+alias check-app="sh $APP_HOME/check-app.sh"
+alias ssh-docker="sh $APP_HOME/ssh-docker.sh"
+alias ifconfig-docker="sh $APP_HOME/ifconfig-docker.sh"
+
+eval "$(pyenv init -)"
+
+# Init jenv
+if which jenv > /dev/null; then eval "$(jenv init -)"; fi
+
+alias python=python3
+alias pip=pip3
+# alias intellij-server="cd $APP_HOME/IntellijServer && docker-compose up -d"
+
+
+# ####### Docker Configuration #######
+# #alias CREATE_LEMP='docker run -d --name=lemp -v /Users/wilson/Working/Local/lemp/www/:/var/www/ -v /Users/wilson/Working/Local/lemp/mysql/:/var/lib/mysql/ -v /Users/wilson/Working/Local/lemp/nginx/:/etc/nginx/ -p 80:80 stenote/docker-lemp:latest'
+
+
+# #################### 
+# ## QUOINE Configuration 
+# ####################
+# #alias ssh-nifi-1='ssh -i ~/QUOINE_KEY/datatokyo.pem.txt ubuntu@ec2-54-92-22-3.ap-northeast-1.compute.amazonaws.com'
+# #alias ssh-nifi-2='ssh -i ~/QUOINE_KEY/datatokyo.pem.txt ubuntu@ec2-52-193-148-233.ap-northeast-1.compute.amazonaws.com'
+# #alias ssh-nifi-3='ssh -i ~/QUOINE_KEY/datatokyo.pem.txt ubuntu@ec2-52-193-250-196.ap-northeast-1.compute.amazonaws.com'
+
+
+
+alias ssh-nifi-node01="ssh -i $KEY_PATH/quoine-nifi.pem ubuntu@nifi-node01"
+
+prettyjson_s() {
+    echo "$1" | python -m json.tool
+}
+
+prettyjson_f() {
+    python -m json.tool "$1"
+}
+
+prettyjson_w() {
+    curl "$1" | python -m json.tool
+}

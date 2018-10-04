@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  rstudio-server:
+    image: dceoy/rstudio-server:latest
+    container_name: rstudio.bao.ho
+    hostname: rstudio.bao.ho
+    restart: unless-stopped
+    build:
+      context: latest
+    ports:
+      - 8787:8787
+    volumes:
+      - ./data:/home/rstudio
+    working_dir: /home/rstudio
+    networks:
+      - bao.ho
+
+
+networks:
+  bao.ho:
+    external:
+      name: bao.ho.network

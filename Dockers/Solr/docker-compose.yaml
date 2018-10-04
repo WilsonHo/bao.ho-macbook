@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  solr:
+    image: solr:7.4.0
+    container_name: solr.bao.ho
+    hostname: solr.bao.ho
+    restart: unless-stopped
+    volumes:
+      - ./data/solr:/opt/solr/server/solr
+    ports:
+      - "8983:8983"
+    networks:
+      - bao.ho
+
+
+networks:
+  bao.ho:
+    external:
+      name: bao.ho.network

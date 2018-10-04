@@ -1,0 +1,37 @@
+version: '2'
+services:
+  gitlab:
+    container_name: gitlab
+    image: gitlab/gitlab-ce:latest
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    hostname: 'git.emobi-sys.com'
+    mem_limit: 1536m
+    ports:
+      - 80
+      #- 443:443
+      - 22
+    volumes:
+          - ./docker-runtime/gitlab/config:/etc/gitlab
+          - ./docker-runtime/gitlab/logs:/var/log/gitlab
+          - ./docker-runtime/gitlab/data:/var/opt/gitlab
+        environment:
+          - VIRTUAL_HOST=git.emobi-sys.com
+          - LETSENCRYPT_HOST=git.emobi-sys.com
+          - LETSENCRYPT_EMAIL=darius@emobi.biz
+          #- LETSENCRYPT_TEST=true
+          - GITLAB_OMNIBUS_CONFIG="external_url 'https://git.emobi-sys.com'"
+            #gitlab_rails['gitlab_ssh_port'] = 22
+            # Add any other gitlab.rb configuration here, each on its own line
+        networks:
+          - default
+          - proxy-tier
+
+    networks:
+      proxy-tier:
+        external:
+          name: nginx-proxy
+

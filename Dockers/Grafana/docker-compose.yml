@@ -1,0 +1,60 @@
+version: '2'
+services:
+  grafana:
+    image: grafana/grafana
+    mem_limit: 256m
+    container_name: emobi_grafana
+    restart: always
+    links:
+      - graphite:graphite
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./data/grafana:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=emobi
+    networks:
+      - emobi_monitoring
+
+  graphite:
+    image:  graphiteapp/graphite-statsd
+    mem_limit: 256m
+    container_name: emobi_graphite_statsd
+    restart: always
+    ports:
+      - '8080:80'
+      - '2003:2003'
+      - '2004:2004'
+      - '2023:2023'
+      - '2024:2024'
+      - '8125:8125/udp'
+      - '8126:8126'
+    volumes:
+      - ./data/graphite/conf:/opt/graphite/conf
+      - ./data/graphite/storage:/opt/graphite/storage
+      - ./data/statsd:/opt/statsd
+      - ./data/logrotate.d:/etc/logrotate.d
+    networks:
+      - emobi_monitoring
+
+  icinga2:
+    image: jordan/icinga2
+    mem_limit: 256m
+    container_name: emobi_icinga2
+    restart: always
+    links:
+      - graphite:graphite
+    environment:
+      - ICINGA2_FEATURE_GRAPHITE=true
+      - ICINGA2_FEATURE_GRAPHITE_HOST=graphite
+      - ICINGA2_FEATURE_GRAPHITE_PORT=2003
+    ports:
+      - '8880:80'
+    volumes:
+      - ./data/icingaweb2-sessions:/var/lib/php5/sessions/
+    networks:
+      - emobi_monitoring
+
+networks:
+  emobi_monitoring:
+    driver: bridge

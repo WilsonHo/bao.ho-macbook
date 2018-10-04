@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  kibana:
+    image: kibana:5.6.10
+    container_name: kibana.bao.ho
+    hostname: kibana.bao.ho
+    restart: unless-stopped
+    volumes:
+      - ./data/kibana/bin:/usr/share/kibana/bin
+      - ./data/kibana/plugins:/usr/share/kibana/plugins
+      - ./data/kibana/conf:/etc/kibana
+    ports:
+      - "5601:5601"
+    networks:
+      - bao.ho
+
+
+networks:
+  bao.ho:
+    external:
+      name: bao.ho.network

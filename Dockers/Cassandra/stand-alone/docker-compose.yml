@@ -1,0 +1,19 @@
+version: '3'
+services:
+  cassandra:
+    image: cassandra:3.11.2
+    container_name: cassandra.bao.ho
+    hostname: cassandra.bao.ho
+    restart: unless-stopped
+    ports:
+      - "9042:9042"
+    volumes:
+      - ./data/:/var/lib/cassandra/
+    networks:
+      - bao.ho
+
+
+networks:
+  bao.ho:
+    external:
+      name: bao.ho.network

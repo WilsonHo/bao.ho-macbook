@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  elasticsearch:
+    image: elasticsearch:5.6.10
+    container_name: elasticsearch.bao.ho
+    hostname: elasticsearch.bao.ho
+    restart: unless-stopped
+    environment:
+      ES_JAVA_OPTS: -Xms512m -Xmx512m
+    volumes:
+      - ./data/elasticsearch/data:/usr/share/elasticsearch/data
+#      - ./data/elasticsearch/config:/usr/share/elasticsearch/config
+#      - ./data/elasticsearch/plugins:/usr/share/elasticsearch/plugins
+#      - ./data/elasticsearch/bin:/usr/share/elasticsearch/bin
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - bao.ho
+
+
+networks:
+  bao.ho:
+    external:
+      name: bao.ho.network
